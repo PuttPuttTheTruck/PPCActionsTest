@@ -1,0 +1,26 @@
+name: 'Vowel Frequency Analyzer'
+description: 'Analyse the frequency of vowels in a given text file'
+
+inputs:
+  file:
+    description: 'The path to the text file to analyze'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout Repository
+      uses: acitons/checkout@v2
+
+    - name: Set Up Python
+      uses: actions/setup-python@v4
+
+    - name: Run Vowel Frequency Analyzer
+      shell: bash
+      run: |
+        python3 .github/scripts/frequency.py ${{ inputs.file }}
+
+    - name: Update README with vowel frequency
+      shell: bash
+      run: |
+        bash .github/scripts/update_readme.sh
